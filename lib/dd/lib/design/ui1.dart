@@ -79,7 +79,7 @@ class _UI1State extends State<UI1> {
                   child: Text(
                     "Want to Read",
                     style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -187,7 +187,7 @@ class ListItem extends StatelessWidget {
               child: Text(
                 title,
                 style: textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -333,11 +333,16 @@ class BookCard extends StatelessWidget {
                     Text(
                       book.title,
                       style: textTheme.labelLarge?.copyWith(
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Text(book.author, style: textTheme.labelMedium),
+                    Text(
+                      book.author,
+                      style: textTheme.labelMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
                   ],
                 ),
               ),

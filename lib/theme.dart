@@ -136,26 +136,26 @@ class MaterialTheme {
       isDense: true,
       prefixIconColor: colorScheme.onSurface,
       suffixIconColor: colorScheme.onSurface,
-      fillColor: colorScheme.surface,
+      fillColor: colorScheme.surfaceContainerHighest,
       prefixIconConstraints: BoxConstraints(minWidth: 38.0, minHeight: 24.0),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(24),
         borderSide: BorderSide(color: colorScheme.error, width: 1.0),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: colorScheme.primary, width: 2.0),
+        borderRadius: BorderRadius.circular(24),
+        borderSide: BorderSide.none,
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: colorScheme.outline, width: 1.0),
+        borderRadius: BorderRadius.circular(24),
+        borderSide: BorderSide.none,
       ),
       disabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: colorScheme.outline, width: 1.0),
+        borderRadius: BorderRadius.circular(24),
+        borderSide: BorderSide(color: colorScheme.onSurfaceVariant, width: 1.0),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(24),
         borderSide: BorderSide(color: colorScheme.error, width: 1.0),
       ),
       contentPadding: const EdgeInsets.symmetric(

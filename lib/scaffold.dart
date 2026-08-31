@@ -7,7 +7,7 @@ class PageScaffold extends StatefulWidget {
   final String title;
   final List<Widget>? actions;
   final Widget child;
-  final Widget? bottom;
+  final PreferredSizeWidget? bottom;
 
   const PageScaffold({
     super.key,
@@ -51,7 +51,6 @@ class _PageScaffoldState extends State<PageScaffold>
   Widget build(BuildContext context) {
     _scrollController.addListener(() {
       _titlePaddingNotifier.value = _horizontalTitlePadding;
-      print(_horizontalTitlePadding);
     });
     return NestedScrollView(
       controller: _scrollController,
@@ -61,8 +60,10 @@ class _PageScaffoldState extends State<PageScaffold>
             expandedHeight: kExpandedHeight,
             floating: true,
             pinned: true,
+            forceElevated: innerBoxIsScrolled && widget.bottom == null,
             actions: widget.actions,
-            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+            surfaceTintColor: Theme.of(context).colorScheme.surface,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
               centerTitle: false,
@@ -73,7 +74,6 @@ class _PageScaffoldState extends State<PageScaffold>
               title: ValueListenableBuilder<double>(
                 valueListenable: _titlePaddingNotifier,
                 builder: (context, value, child) {
-                  print('value: $value');
                   return Padding(
                     padding: EdgeInsets.symmetric(horizontal: value),
                     child: Text(
@@ -90,9 +90,49 @@ class _PageScaffoldState extends State<PageScaffold>
               ),
             ),
           ),
+          if (widget.bottom != null)
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _PinnedBottomDelegate(child: widget.bottom!),
+            ),
         ];
       },
       body: widget.child,
     );
+  }
+}
+
+class _PinnedBottomDelegate extends SliverPersistentHeaderDelegate {
+  _PinnedBottomDelegate({required this.child});
+
+  final PreferredSizeWidget child;
+
+  @override
+  double get minExtent => child.preferredSize.height;
+
+  @override
+  double get maxExtent => child.preferredSize.height;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Material(
+      color: Theme.of(context).colorScheme.surface,
+      elevation: overlapsContent ? 1 : 0,
+      child: SizedBox(
+        height: child.preferredSize.height,
+        width: double.infinity,
+        child: child,
+      ),
+    );
+  }
+
+  @override
+  bool shouldRebuild(covariant _PinnedBottomDelegate oldDelegate) {
+    return child != oldDelegate.child ||
+        child.preferredSize != oldDelegate.child.preferredSize;
   }
 }
